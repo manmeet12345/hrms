@@ -1,0 +1,91 @@
+{% extends "main.html" %}
+{% block content %}
+<html>
+    <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+        <style>
+            ::placeholder{
+                color: grey;
+            }
+            label{
+                display: block;
+                margin-top: 30px;
+                font-size: 16px;
+                font-weight: 500;
+            }
+            input{
+                display: block;
+                height: 50px;
+                width: 100%;
+                background-color: rgba(255,255,255,0.07);
+                border-radius: 3px;
+                padding: 0 10px;
+                margin-top: 8px;
+                font-size: 14px;
+                font-weight: 300;
+            }
+            button{
+                margin-top: 50px;
+                width: 100%;
+                background-color: #ffffff;
+                color: #080710;
+                padding: 15px 0;
+                font-size: 18px;
+                font-weight: 600;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            form{
+                height: 850px;
+                width: 600px;
+                background-color: rgba(255,255,255,0.13);
+                position: absolute;
+                transform: translate(-50%,-50%);
+                top: 50%;
+                left: 50%;
+                border-radius: 10px;
+                backdrop-filter: blur(10px);
+                border: 2px solid rgba(255,255,255,0.1);
+                box-shadow: 0 0 40px rgba(8,7,16,0.6);
+                padding: 0px 35px;
+                margin:210px;
+                margin-left:80px;
+            }
+            .submitbtn{
+                background-color:#53c0fe;
+                font-weight: bold;
+            }
+
+            .submitbtn:hover{
+                background-color:#050d8a;
+                color: white;
+            }
+        </style>
+    </head>
+<br>
+
+<div class="loginform">
+    <form method="POST" action="{% url 'update_employee' pk=emp.pk %}">
+         {% csrf_token %}<br>
+         <h2 text-align="center">Update {{emp.first_name}} Data</h2>
+         <label for="first_name"><b>First Name:<b></label>
+         <input type="text" name="first_name" id ="first_name" value={{emp.first_name}}>
+         <label for="last_name"><b>Last Name:<b></label>
+         <input type="text" name="last_name" id="last_name" value={{emp.last_name}} >
+         <label for="phone_no"><b>Phone Number:<b></label>
+         <input type="text" name="phone_no" id="phone_no" value={{emp.phone_no}} >
+         <label for="address"><b>Address:<b></label>
+         <textarea name="address" id="address">{{emp.address}}</textarea>
+         <label for="department"><b>Department:<b></label>
+         <input type="text" name="department" id="department" value={{emp.department}}>
+         <label for="birth_date"><b>Birth Date:</b></label>
+         <input type="date" id="birth_date" name="birth_date" value={{emp.birth_date|date:'Y-m-d'}}>
+         <label for="designation"><b>Designation:<b></label>
+         <input type="text" name="designation" id="designation" value={{emp.title}}>
+         <b><input type="submit" value="Update {{emp.first_name}} data" class="submitbtn"/></b>  
+    </form> <br>
+</div>
+</html>
+{% endblock content %}

@@ -1,0 +1,111 @@
+{% include "navbar.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List </title>
+    <!--<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <style>
+                .container {
+                width: 80%;
+                margin: auto;
+                padding: 20px;
+                }
+
+                .employee-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                }
+
+                .employee-table th, .employee-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                }
+
+                .employee-table th {
+                background-color: #f2f2f2;
+                text-align: left;
+                }
+
+                .employee-table tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+                }
+
+                .employee-table tbody tr:hover {
+                background-color: #ddd;
+                }
+
+                .button2 {background-color: #008CBA;} /* Blue */
+                .button3 {background-color: #f44336;} /* Red */ 
+
+                .button {
+                    
+                    border: none;
+                    color: white;
+                    padding: 10px 25px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 14px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                  }
+
+
+    </style>    
+</head>
+<body>
+<br><br>
+<h1 style="text-align:center">Employee Details</h1><br><br>
+<table class="employee-table" id="myTable">
+    <!-- Table headers -->
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Department</th>
+            <th>Join Date</th>
+            <th>Designation</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employees %}
+        <tr>
+            <!-- Table data -->
+            <td>{{ employee.first_name }}</td>
+                    <td>{{ employee.last_name }}</td>
+                    <td>{{ employee.phone_no }}</td>
+                    <td>{{ employee.address }}</td>
+                    <td>{{ employee.department }}</td>
+                    <td>{{ employee.birth_date|date:"d-m-Y"  }}</td>
+                    <td>{{ employee.title }}</td>
+                    <td><a href="{% url 'update_employee' employee.id%}" class="button button2">Update</a></td>
+                    <td><a href="{% url 'delete_employee' employee.id%}" class="button button3">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function(){
+        $("#myTable").dataTable({
+            "paging":true,
+            "ordering":true,
+            "searching":true
+        });
+    });
+</script>
+</body>
+</html>
+{% endblock content %}
