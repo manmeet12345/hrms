@@ -3,7 +3,31 @@
 <html lang="en"> 
 
 <head> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-Pjfh+cqN+KRm56Pgv/B6Gw5zM2mP+4e+OjE5FgPBHmF4tWOHFD7w9BmaWbqfW4ivjV8hfwE7to5gimMmnA3uOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<style>
+		#chatbotBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #53c0fe;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        #chatbotWindow {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 9998;
+            display: none;
+        }
+
 	* { 
 	padding: 0; 
 	margin: 0; 
@@ -409,20 +433,19 @@ footer .footer span a:hover {
 
 		<div class="navbar"> 
 			<ul> 
-				<li><a href="#Home">Home</a></li> 
-				<li><a href="{% url 'time_management'%}">Time Management</a></li>
-				<li><a href="#">Leave Management</a></li> 
-				<li><a href="{% url 'employee_manage' %}">Employee Management</a></li> 
-				<li><a href="#">Attendance Management</a></li> 
+				<li><a href="#Home"><b>Home</b></a></li> 
+				<li><a href="{% url 'time_management'%}"><b>Time Management</b></a></li>
+				<li><a href="#"><b>Leave Management</b></a></li> 
+				<li><a href="{% url 'employee_manage' %}"><b>Employee Managememt</b></a></li> 
+				<li><a href="#"><b>Attendance Management</b></a></li> 
 				{% if request.user.is_authenticated %}
-				<li><a href="{% url 'logout' %}">Sign Out</a></li>
+				<li><a href="{% url 'logout' %}"><b>Sign Out</b></a></li>
 				{% else %} 
-				<li><a href="{% url 'login' %}">Sign In</a></li> 
+				<li><a href="{% url 'login' %}"><b>Sign In</b></a></li> 
 				{% endif %}
 			</ul> 
 		</div> 
 	</nav> 
-
 	<!-- Side navigation bar for 
 		responsive website -->
 	<div class="sideNavigationBar"
@@ -544,6 +567,20 @@ footer .footer span a:hover {
 			</div> 
 		</div> 
 	</section> 
+	<button id="chatbotBtn"><b>HRMS Bot</b></button>
+    <div id="chatbotWindow" style="display: none;">
+        <iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/c00119e0-4b29-422a-b0d9-662c6fb45e78"></iframe>
+    </div>
+
+    <script>
+        const chatbotBtn = document.getElementById('chatbotBtn');
+        const chatbotWindow = document.getElementById('chatbotWindow');
+
+        chatbotBtn.addEventListener('click', () => {
+            chatbotWindow.style.display = chatbotWindow.style.display === 'none' ? 'block' : 'none';
+        });
+    </script>
+	<!--<iframe width="350" height="430" allow="microphone;" src="https://console.dialogflow.com/api-client/demo/embedded/c00119e0-4b29-422a-b0d9-662c6fb45e78"></iframe>-->
 	<!-- Footer section -->
 	<footer> 
 		<div class="footer"> 

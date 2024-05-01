@@ -5,9 +5,14 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import employee
+from .models import employee, Timetrack
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.db.models import Q
+import datetime
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth import views as auth_views
 # Create your views here.
 
 def homepage(request):
@@ -52,10 +57,18 @@ def logoutUser(request):
     return redirect('homepage')
 
 def time_management(request):
-    return render(request,"time_management.html")
+    if request.user.is_authenticated:
+
+        return render(request,"time_management.html")
+    else:
+        return redirect('/home/login/')
+
 
 def employee_manage(request):
-    return render(request,'employee_manage.html')
+    if request.user.is_authenticated:
+        return render(request,'employee_manage.html')
+    else:
+        return redirect('/home/login/')
 
 def add_employee(request):
     if request.method == "POST":
@@ -66,6 +79,7 @@ def add_employee(request):
         department = request.POST.get('department')
         birth_date = request.POST.get('birth_date')
         designation = request.POST.get('designation')
+        emp_code = request.POST.get('emp_code')
         
         employee.objects.create(
             first_name=first_name,
@@ -74,7 +88,8 @@ def add_employee(request):
             address=address,
             department=department,
             birth_date=birth_date,
-            title=designation
+            title=designation,
+            emp_code = emp_code
         )
         return render(request,'add_employee.html')
         
@@ -115,6 +130,7 @@ def update_employee(request,pk):
         department = request.POST.get('department')
         birth_date = request.POST.get('birth_date')
         designation = request.POST.get('designation')
+        emp_code = request.POST.get('emp_code')
         
         emp.first_name = first_name
         emp.last_name = last_name
@@ -123,6 +139,7 @@ def update_employee(request,pk):
         emp.department = department
         emp.birth_date = birth_date
         emp.title = designation
+        emp.emp_code = emp_code
         
         emp.save()
         return redirect('employee_details')
@@ -132,3 +149,55 @@ def delete_employee(request,pk):
     emp = employee.objects.get(id=pk)
     emp.delete()
     return redirect('employee_details')
+
+def time_track(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        description = request.POST.get('description')
+        start_time_str = request.POST.get('start_time')
+        end_time_str = request.POST.get('end_time')
+
+        start_time = None
+        end_time = None
+
+        # Convert string values to datetime objects
+        if start_time_str:
+            start_time = datetime.datetime.strptime(start_time_str, '%Y-%m-%dT%H:%M')
+
+        if end_time_str:
+            end_time = datetime.datetime.strptime(end_time_str, '%Y-%m-%dT%H:%M')
+
+        Timetrack.objects.create(
+            employee = username,
+            description = description,
+            start_time = start_time,
+            end_time = end_time
+
+        )
+        return render(request,'time_track.html')
+    return render(request, 'time_track.html')
+
+def view_timetrack(request):
+    timetracks = Timetrack.objects.all()
+    
+
+    return render(request,'view_timetrack.html',{'timetracks':timetracks})
+
+'''def chatbot_view(request):
+    if request.method == 'POST':
+        query = request.POST.get('query')
+        session_client = dialogflow.SessionsClient()
+        session = session_client.session_path(settings.DIALOGFLOW_PROJECT_ID, request.session.session_id)
+
+        text_input = dialogflow.TextInput(text=query, language_code='en')
+        query_input = dialogflow.QueryInput(text=text_input)
+
+        response = session_client.detect_intent(
+            request={"session": session, "query_input": query_input}
+        )
+
+        response_text = response.query_result.fulfillment_text
+        context = {'response': response_text}
+        return render(request, 'chatbot.html', context)
+
+    return render(request, 'chatbot.html')'''

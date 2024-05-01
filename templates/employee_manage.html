@@ -190,7 +190,9 @@ button:hover{
 
 <div class="line">
     <div class="side1">
+        {% if request.user.username == 'manmeet' %}
         <button><a href="{% url 'add_employee' %}" class="button-txt">Add Employee</a></button>
+        {% endif %}
         <button><a href="{% url 'employee_details' %}" class="button-txt">Employee Details</a></button>
         <!--<button><a href="#" class="button-txt">Link5</a></button>-->
     </div>

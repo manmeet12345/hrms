@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee List </title>
+    <title>Time Track </title>
     <!--<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -63,41 +63,29 @@
 </head>
 <body>
 <br><br>
-<h1 style="text-align:center">Employee Details here</h1><br><br>
+<h1 style="text-align:center">Time Tracking here</h1><br><br>
 <table class="employee-table" id="myTable">
     <!-- Table headers -->
     <thead>
         <tr>
-            <th>Employee Code</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone Number</th>
-            <th>Address</th>
-            <th>Department</th>
-            <th>Joining Date</th>
-            <th>Designation</th>
-            {% if request.user.username == 'manmeet' %}
+            <th>Employee</th>
+            <th>Description</th>
+            <th>Start Time</th>
+            <th>End Time</th>
             <th>Update</th>
             <th>Delete</th>
-            {% endif %}
         </tr>
     </thead>
     <tbody>
-        {% for employee in employees %}
+        {% for timetrack in timetracks %}
         <tr>
             <!-- Table data -->
-                    <td>{{employee.emp_code}}</td>
-                    <td>{{ employee.first_name }}</td>
-                    <td>{{ employee.last_name }}</td>
-                    <td>{{ employee.phone_no }}</td>
-                    <td>{{ employee.address }}</td>
-                    <td>{{ employee.department }}</td>
-                    <td>{{ employee.birth_date|date:"d-m-Y"  }}</td>
-                    <td>{{ employee.title }}</td>
-                    {% if request.user.username == 'manmeet' %}
-                    <td><a href="{% url 'update_employee' employee.id%}" class="button button2">Update</a></td>
-                    <td><a href="{% url 'delete_employee' employee.id%}" class="button button3">Delete</a></td>
-                    {% endif %}
+                    <td>{{timetrack.employee}}</td>
+                    <td>{{ timetrack.description }}</td>
+                    <td>{{ timetrack.start_time }}</td>
+                    <td>{{ timetrack.end_time }}</td>
+                    <td><a href="#" class="button button2">Update</a></td>
+                    <td><a href="#" class="button button3">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

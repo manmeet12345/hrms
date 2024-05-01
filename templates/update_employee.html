@@ -38,7 +38,7 @@
                 cursor: pointer;
             }
             form{
-                height: 850px;
+                height: 950px;
                 width: 600px;
                 background-color: rgba(255,255,255,0.13);
                 position: absolute;
@@ -70,6 +70,8 @@
     <form method="POST" action="{% url 'update_employee' pk=emp.pk %}">
          {% csrf_token %}<br>
          <h2 text-align="center">Update {{emp.first_name}} Data</h2>
+         <label for="emp_code"><b>Employee Code:<b></label>
+         <input type="text" name="emp_code" id ="emp_code" value="{{emp.emp_code}}"/>
          <label for="first_name"><b>First Name:<b></label>
          <input type="text" name="first_name" id ="first_name" value={{emp.first_name}}>
          <label for="last_name"><b>Last Name:<b></label>

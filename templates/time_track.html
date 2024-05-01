@@ -39,7 +39,7 @@
                 cursor: pointer;
             }
             form{
-                height: 990px;
+                height: 600px;
                 width: 600px;
                 background-color: rgba(255,255,255,0.13);
                 position: absolute;
@@ -51,7 +51,7 @@
                 border: 2px solid rgba(255,255,255,0.1);
                 box-shadow: 0 0 40px rgba(8,7,16,0.6);
                 padding: 0px 35px;
-                margin:210px;
+                margin:30px;
                 margin-left:80px;
             }
             .submitbtn{
@@ -68,27 +68,26 @@
 <br>
 
 <div class="loginform">
-    <form method="POST" action="{% url 'add_employee' %}">
+    <form method="POST" action="{% url 'time_track' %}">
          {% csrf_token %}<br>
-         <h2>Add a new Employee</h2>
-         <label for="emp_code"><b>Employee Code:<b></label>
-         <input type="text" name="emp_code" id ="emp_code" placeholder="Enter Employee Code" required/>
-         <label for="first_name"><b>First Name:<b></label>
-         <input type="text" name="first_name" id ="first_name" placeholder="Enter First Name" required/>
-         <label for="last_name"><b>Last Name:<b></label>
-         <input type="text" name="last_name" id="last_name" placeholder="Enter Last Name" required/>
-         <label for="phone_no"><b>Phone Number:<b></label>
-         <input type="text" name="phone_no" id="phone_no" placeholder="Enter Phone Number" required/>
-         <label for="address"><b>Address:<b></label>
-         <textarea name="address" id="address" required/></textarea>
-         <label for="department"><b>Department:<b></label>
-         <input type="text" name="department" id="department" placeholder="Enter Department" required/>
-         <label for="birth_date"><b>Joining Date:</b></label>
-         <input type="date" id="birth_date" name="birth_date">
-         <label for="designation"><b>Designation:<b></label>
-         <input type="text" name="designation" id="designation" placeholder="Enter Designation" required/>
-         <b><input type="submit" value="Add Employee" class="submitbtn"/></b>  
+         <h2 style="text-align: center;">Time Tracking</h2>
+         <label for="username"><b>Username:<b></label>
+         <input type="text" name="username" id ="username" value="{{request.user.username}}" required/>
+         <label for="description"><b>Description:<b></label>
+         <textarea name="description" id="description" required/></textarea>
+         <div class="flex justify-between">
+            <div>
+                <label for="start_time" class="block text-gray-700 font-bold mb-2">Start Time</label>
+                <input type="datetime-local" id="start_time" name = "start_time" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div>
+                <label for="end_time" class="block text-gray-700 font-bold mb-2">End Time</label>
+                <input type="datetime-local" id="end_time" name = "end_time" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+        </div>
+         <b><input type="submit" value="Record time" class="submitbtn"/></b>  
     </form> <br>
 </div>
 </html>
+
 {% endblock content %}

@@ -11,5 +11,9 @@ urlpatterns = [
     path('add_employee/',views.add_employee,name='add_employee'),
     path('employee_details/',views.employee_details,name='employee_details'),
     path('update_employee/<str:pk>',views.update_employee,name='update_employee'),
-    path('delete_employee/<int:pk>',views.delete_employee,name='delete_employee')
+    path('delete_employee/<int:pk>',views.delete_employee,name='delete_employee'),
+    path('time_track/',views.time_track,name='time_track'),
+    path('view_timetrack/',views.view_timetrack,name='view_timetrack'),
+    #path('accounts/login/', LoginView.as_view(template_name='login.html'), name='login'),
+    #path('chatbot/', views.chatbot_view, name='chatbot'),
 ]
